@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Optimizing images on the client side - SiteLint</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="SiteLint">
+  <meta name="description" content="Optimizing images before upload on the client side">
+  <meta name="keywords" content="images, optimizing">
+
+  <link rel="icon" href="https://www.sitelint.com/wp-content/themes/sitelint/assets/images/favicon.ico" sizes="any">
+  <link rel="icon" href="https://www.sitelint.com/wp-content/themes/sitelint/assets/images/favicon.svg"
+    type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    html,
+    body {
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
+      background: #fff;
+      color: #000;
+      font-family: Inter, "Helvetica Neue", "Segoe UI", Helvetica, Arial, "Lucida Grande", sans-serif;
+      font-weight: 400;
+      font-size: 1em;
+      line-height: 1.45em;
+      padding: 0 1em 1em 1em;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      color: #333;
+      font-family: Inter, "Helvetica Neue Light", "Helvetica Neue", "Segoe UI", Helvetica, Arial, "Lucida Grande", sans-serif;
+      font-weight: 200;
+      margin: 0.5em 0;
+      letter-spacing: -0.024em;
+      line-height: 0.9em;
+    }
+
+    h1 {
+      font-size: 52px;
+    }
+
+    h2 {
+      font-size: 32px;
+    }
+
+    ol,
+    pre,
+    p {
+      margin-bottom: 1rem;
+    }
+
+    ul {
+      margin: 0;
+      padding: 0 0 0 1.5rem;
+    }
+
+    @media (max-width: 575.98px) {
+      h1 {
+        text-align: center;
+      }
+    }
+
+    .skip-menu a {
+      left: 50%;
+      transform: translate(-50%, 0);
+      background-color: #0070d1;
+      border-radius: 0;
+      box-shadow: 0px 0px 18px -1px rgb(0 0 0 / 32%);
+      color: #fff;
+      display: block;
+      padding: 1rem;
+      position: absolute;
+      text-align: center;
+      top: -7rem;
+      transition: top .3s ease-in-out;
+      z-index: 999999;
+    }
+
+    .skip-menu a:focus {
+      background-color: #0070d1;
+      color: #fff;
+      outline-color: #0070d1;
+      top: 4px;
+    }
+
+    table tbody tr td:nth-child(1) {
+      font-family: monospace;
+      font-size: 1rem;
+    }
+
+    img {
+      display: block;
+      height: 1000px;
+      margin-bottom: 2rem;
+      max-width: 100%;
+    }
+
+    video {
+      margin-bottom: 300px;
+      max-width: 400px;
+    }
+  </style>
+</head>
+
+<body>
+  <nav aria-label="Skip links" class="skip-menu">
+    <a class="site-skip" href="#main-content">Skip to content</a>
+  </nav>
+
+  <header class="container">
+    <h1>Improved attribute lazy loading</h1>
+  </header>
+
+  <main class="container" id="main-content">
+
+    <p>Open developer tools and observe HTML structure or Network and how it changes.</p>
+
+    <img src="images/prague-3010406_1920.jpeg" alt="Prague" loading="lazy">
+    <video src="video/tooltip_on_chrome_and_voiceover_mac_os.mp4" controls preload="none"></video>
+
+    <img src="images/prague-3010406_1920.jpeg" alt="Prague" loading="lazy">
+    <video src="video/tooltip_on_chrome_and_voiceover_mac_os.mp4" controls preload="none"></video>
+
+    <img src="images/prague-3010406_1920.jpeg" alt="Prague" loading="lazy">
+    <video src="video/tooltip_on_chrome_and_voiceover_mac_os.mp4" controls preload="none"></video>
+
+  </main>
+
+  <footer class="container">© 2023 <a href="https://www.sitelint.com/">Sitelint</a></footer>
+
+  <script>
+    (function () {
+      const head = document.head;
+
+      const loadPackage = () => {
+        const script = document.createElement('script');
+
+        script.src = 'improved-attribute-lazy-loading.js?c=' + new Date().getTime();
+        script.type = 'text/javascript';
+        script.async = true;
+
+        script.onload = () => {
+          const iall = new sitelint.ImprovedAttributeLazyLoading();
+
+          iall.install();
+        };
+
+        head.insertBefore(script, head.firstChild);
+      };
+
+      if (typeof document.readyState === 'string' && document.readyState === 'complete') {
+        loadPackage();
+      } else {
+        document.addEventListener('DOMContentLoaded', loadPackage, true);
+      }
+
+      // Google Analytics
+      const loadGTM = () => {
+        const gtmScript = document.createElement('script');
+
+        gtmScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-JTTSY0KNFH';
+        gtmScript.type = 'text/javascript';
+        gtmScript.async = true;
+
+        gtmScript.onload = () => {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() { dataLayer.push(arguments); }
+          gtag('js', new Date());
+          gtag('config', 'G-JTTSY0KNFH');
+        };
+
+        head.insertBefore(gtmScript, head.firstChild);
+      };
+
+      let url = new URL(window.location.href);
+
+      if (url.protocol !== 'file:') {
+        loadGTM();
+      }
+    }())
+  </script>
+</body>
+
+</html>
