@@ -2,7 +2,7 @@
   "name": "@sitelintcode/improved-attribute-lazy-loading",
   "description": "Improve lazy loading for audio, video and image",
   "author": "Cezary Tomczyk <cezary.tomczyk@gmail.com> (https://www.sitelint.com/)",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MOZILLA PUBLIC LICENSE, VERSION 2.0",
   "node": ">=16",
   "main": "dist/improved-attribute-lazy-loading.js",
