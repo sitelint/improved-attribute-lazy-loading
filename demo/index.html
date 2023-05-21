@@ -109,8 +109,11 @@
       max-width: 100%;
     }
 
-    video {
+    figure {
       margin-bottom: 300px;
+    }
+
+    video {
       max-width: 400px;
     }
   </style>
@@ -127,16 +130,27 @@
 
   <main class="container" id="main-content">
 
+    <p>Original article: <a href="https://www.sitelint.com/blog/improved-lazy-loading-for-image-video-and-audio/">Improved lazy loading for image, video, and audio</a>.</p>
+
     <p>Open developer tools and observe HTML structure or Network and how it changes.</p>
 
     <img src="images/prague-3010406_1920.jpeg" alt="Prague" loading="lazy">
-    <video src="video/tooltip_on_chrome_and_voiceover_mac_os.mp4" controls preload="none"></video>
+    <figure>
+      <video src="video/prague-in-4k.mp4" controls preload="none" poster="video/prague-in-4k.thumbnail.jpg"></video>
+      <figcaption>Prague in 4K by <cite><a href="https://www.youtube.com/watch?v=6H_1CW69Fzo" target="_blank" rel="noopener">Cities in 4K</a></cite></figcaption>
+    </figure>
 
-    <img src="images/prague-3010406_1920.jpeg" alt="Prague" loading="lazy">
-    <video src="video/tooltip_on_chrome_and_voiceover_mac_os.mp4" controls preload="none"></video>
+    <img src="images/vienna-state-opera-4403839_1920.jpg" alt="Vienna" loading="lazy">
+    <figure>
+      <video src="video/vienna-in-4k.mp4" controls preload="none" poster="video/vienna-in-4k.thumbnail.jpg"></video>
+      <figcaption>Vienna in 4K by <cite><a href="https://www.youtube.com/watch?v=cwenLWoeItQ" target="_blank" rel="noopener">Cities in 4K</a></cite></figcaption>
+    </figure>
 
-    <img src="images/prague-3010406_1920.jpeg" alt="Prague" loading="lazy">
-    <video src="video/tooltip_on_chrome_and_voiceover_mac_os.mp4" controls preload="none"></video>
+    <img src="images/ljubljana-6576041_1920.jpg" alt="Ljubljana" loading="lazy">
+    <figure>
+      <video src="video/ljubljana-in-4k.mp4" controls preload="none" poster="video/ljubljana-in-4k.thumbnail.jpg"></video>
+      <figcaption>Ljubljana in 4K by <cite><a href="https://www.youtube.com/watch?v=V41D7lsEruI" target="_blank" rel="noopener">Cities in 4K</a></cite></figcaption>
+    </figure>
 
   </main>
 
