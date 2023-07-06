@@ -107,14 +107,24 @@
       height: 1000px;
       margin-bottom: 2rem;
       max-width: 100%;
+      object-fit: contain;
     }
 
     figure {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
       margin-bottom: 300px;
     }
 
     video {
       max-width: 400px;
+    }
+
+    @media (max-width: 767.98px) {
+      video {
+        max-width: 100%;
+      }
     }
   </style>
 
