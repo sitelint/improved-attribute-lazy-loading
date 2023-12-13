@@ -14,10 +14,16 @@ export class ImprovedAttributeLazyLoading {
   }
 
   private checkForVisibility(observedElement: Element): void {
-    const target: Element = observedElement;
+    const target: HTMLElement = observedElement as HTMLElement;
     const isAnyPartOfElementRenderedOnPage: boolean = DomUtility.isAnyPartOfElementRenderedOnPage(target);
+    const isMediaAutopauseUsed: boolean = typeof (target as HTMLMediaElement).dataset.mediaAutoplay === 'string';
 
     if (isAnyPartOfElementRenderedOnPage === false) {
+
+      if (this.mediaElements.includes(target.nodeName.toLowerCase()) && isMediaAutopauseUsed && target.dataset.mediaAutopause === 'true') {
+        (target as HTMLMediaElement).pause();
+      }
+
       return;
     }
 
@@ -30,6 +36,10 @@ export class ImprovedAttributeLazyLoading {
             (target as HTMLMediaElement).preload = (target as HTMLMediaElement).dataset.preload as '' | 'none' | 'metadata' | 'auto';
           } else {
             (target as HTMLMediaElement).preload = 'metadata';
+          }
+
+          if (isMediaAutopauseUsed && (target as HTMLMediaElement).dataset.mediaAutoplay === 'true') {
+            (target as HTMLMediaElement).play();
           }
         }
 
@@ -45,6 +55,10 @@ export class ImprovedAttributeLazyLoading {
 
       default:
         break;
+    }
+
+    if (isMediaAutopauseUsed) {
+      return;
     }
 
     this.intersectionObserver?.unobserve(target);
@@ -67,6 +81,18 @@ export class ImprovedAttributeLazyLoading {
     }
   }
 
+  private createDebugEvents(cssSelector: string): void {
+    const handleMediaChanges = (event: Event): void => {
+      console.log(`Event type: ${event.type}, Element: `, event.target);
+    };
+
+    Array.from(document.querySelectorAll(cssSelector)).forEach((element: Element): void => {
+      'play pause'.split(' ').forEach((eventType: string): void => {
+        element.addEventListener(eventType, handleMediaChanges);
+      });
+    });
+  }
+
   public uninstall(): void {
     if (this.intersectionObserver instanceof IntersectionObserver) {
       this.intersectionObserver.disconnect();
@@ -75,7 +101,7 @@ export class ImprovedAttributeLazyLoading {
     this.handleObserverReference = undefined;
   }
 
-  public install(timeout: number = 1000, cssSelector: string = this.defaultCssSelector): void {
+  public install(timeout: number = 1000, cssSelector: string = this.defaultCssSelector, debug: boolean = false): void {
     this.timeout = timeout;
 
     const intersectionObserverOptions: IntersectionObserverInit = {
@@ -87,6 +113,11 @@ export class ImprovedAttributeLazyLoading {
 
     for (const element of Array.from(document.querySelectorAll(cssSelector))) {
       if (DomUtility.isAnyPartOfElementRenderedOnPage(element)) {
+
+        if (typeof (element as HTMLMediaElement).dataset.mediaAutoplay === 'string' && (element as HTMLMediaElement).dataset.mediaAutoplay === 'true') {
+          (element as HTMLMediaElement).play();
+        }
+
         continue;
       }
 
@@ -96,6 +127,10 @@ export class ImprovedAttributeLazyLoading {
       }
 
       this.intersectionObserver.observe(element);
+    }
+
+    if (debug) {
+      this.createDebugEvents(cssSelector);
     }
   }
 }

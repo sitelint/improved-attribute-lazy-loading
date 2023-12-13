@@ -8,8 +8,9 @@ declare class ImprovedAttributeLazyLoading {
     private checkForVisibility;
     private processEntry;
     private handleObserver;
+    private createDebugEvents;
     uninstall(): void;
-    install(timeout?: number, cssSelector?: string): void;
+    install(timeout?: number, cssSelector?: string, debug?: boolean): void;
 }
 
 export { ImprovedAttributeLazyLoading };

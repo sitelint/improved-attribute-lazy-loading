@@ -6,6 +6,17 @@ Optimizing lazy loading for image, video, and audio that includes time visibilit
 
 * Set `preload` attribute value on `<video>` or `<audio>` element once it's in the viewport.
 * Load the image `<img>`, `<video>` or `<audio>` when it's visible for at least 1 second in the viewport. This will prevent fetching the image while the user scrolls fast through the page.
+* Pause and resume automatically playing `<video>` or `<audio>` when it's not in the viewport. This is configurable.
+
+## Settings
+
+### Automatically play and pause depending on the visibility in the viewport
+
+For scenarios where you want to play video automatically when it's in the viewport and pause when it's outside of the viewport, you may use `data-media-autoplay="true"` and `data-media-autopause="true"`.
+
+```HTML
+<video src="video/ljubljana-in-4k.mp4" data-media-autoplay="true" data-media-autopause="true" loop muted preload="none" poster="video/ljubljana-in-4k.thumbnail.jpg"></video>
+```
 
 ## Demo
 
@@ -36,15 +47,16 @@ Example code with minimum requirements.
 
 ## TypeScript
 
+Following options are available:
+
+* `timeout`: number, default: `1000` (in ms). Set the timeout after which visibility should be checked.
+* `cssSelector`: string, default: `audio, img[loading="lazy"], video`
+* `debug`: boolean, default: `false`. Settings it to `true` will help to set event listeners: `play`, `pause` to each media element so you can track it's state when they are in the viewport or outside.
+
 ```TypeScript
 import { ImprovedAttributeLazyLoading } from '@sitelintcode/improved-attribute-lazy-loading';
 
 const improvedAttributeLazyLoading: ImprovedAttributeLazyLoading = new ImprovedAttributeLazyLoading();
-
-// Those options are optional
-
-// timeout: number, default: 1000 (in ms)
-// cssSelector: string, default: 'audio, img[loading="lazy"], video'
 
 improvedAttributeLazyLoading.install(timeout, cssSelector);
 ```
